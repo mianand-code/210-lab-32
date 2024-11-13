@@ -36,6 +36,7 @@ int main()
 
     while (!tollBoothLine.empty()) // as long as the deque is not empty (.empty()) - meaning cars are still in line
     {
+        cout << endl;
         cout << "Time: " << timePeriod << " "; // output the current time period
 
         if (probability <= HEAD_CAR_PAYS_LEAVES) // handle the case where the car at the head of the line pays & leaves
@@ -58,10 +59,21 @@ int main()
         // after each time period, display the queue
         if (tollBoothLine.empty()) // use .empty to check if the deque has any more cars in line
         {
-            // if there are no 
+            // if there are no Car objects in the deque, the queue is empty
             cout << "Queue:" << endl;
             cout << "    Empty" << endl;
         }
+        else // display the Car objects in the deque (line)
+        {
+            cout << "Queue:" << endl;
+            for (auto car : tollBoothLine) // using a range-based for loop and the "auto" keyword to output the contents of the std::deque
+            {
+                cout << "    ";
+                car.print(); // using the .print() nethod in the Car class to print each Car object stored in the deque
+            }
+        }
+
+        timePeriod++; // increment the time period counter for accurate output of time during the next loop
     }
     
     return 0;
