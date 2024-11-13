@@ -25,7 +25,26 @@ int main()
 
     // when the simulation starts, 2 cars should already be in line to pay the toll
     for (int i = 0; i < INITIAL_LINE; i++)
-        tollBoothLine.push_back(Car()); // using .push_back to add a Car object (using the Car class) to the back of the deque
+        tollBoothLine.push_back(Car()); // using .push_back() to add a Car object (using the Car class) to the back of the deque
+
+    cout << "Initial queue:" << endl; // output the initial/starting queue of cars
+    for (auto car : tollBoothLine) // using a range-based for loop and the "auto" keyword to output the contents of the std::deque
+        car.print(); // using the .print() nethod in the Car class to print each Car object stored in the deque
+
+    while (!tollBoothLine.empty()) // as long as the deque is not empty (.empty()) - meaning cars are still in line
+    {
+        cout << "Time: " << timePeriod << " "; // output the current time period
+
+        if (probability <= HEAD_CAR_PAYS_LEAVES) // handle the case where the car at the head of the line pays & leaves
+        {
+            cout << "Operation: Car paid: ";
+            // access the information of the head car by using .front() & print its info using .print() from the Car class
+            // I am displaying the information first before using pop_back() so that I can access the car's information directly before removing it from the deque
+            // the while loop performs a check to ensure that we will not rem
+            tollBoothLine.front().print();
+            tollBoothLine.pop_front(); // remove the head car from the deque by using .pop_front()
+        }
+    }
     
     return 0;
 }
