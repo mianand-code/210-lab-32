@@ -33,16 +33,28 @@ int main()
     // when the simulation starts, 1-3 cars should already be in line to pay the toll
     for (int l = 0; l < TOLL_BOOTH_LANE_NUM; l++) // for each one of the lanes
     {
-        int initialCars = rand() %
-        
-        tollBoothLine.push_back(Car()); // using .push_back() to add a Car object (using the Car class) to the back of the deque
+        int initialCars = rand() % INITIAL_LINE_MAX + 1; // generate a random # of cars between 1-3 and store it in a variable
+
+        for (int c = 0; c < initialCars; c++) // according to the random # of cars generated
+        {
+            // use .push_back() to add a Car object (using the Car class) to the back of the deque (lane)
+            // [l] accesses a specific lane (array index)
+            tollBoothLanes[l].push_back(Car());
+        }
     }
 
-    cout << "Initial queue:" << endl; // output the initial/starting queue of cars
-    for (auto car : tollBoothLine) // using a range-based for loop and the "auto" keyword to output the contents of the std::deque
+    cout << "Initial queue:" << endl; // output the initial/starting queue of cars for each lane
+    for (int i = 0; i < TOLL_BOOTH_LANE_NUM; i++) // for each one of the lanes
     {
-        cout << "    ";
-        car.print(); // using the .print() nethod in the Car class to print each Car object stored in the deque
+        cout << "Lane: " << i + 1 << ": " << endl; // output the lane #
+        
+        // use a range-based for loop and the "auto" keyword to output the Car objects in each of the 4 lanes
+        // loop through
+        for (auto car : tollBoothLine)
+        {
+            cout << "    ";
+            car.print(); // using the .print() nethod in the Car class to print each Car object stored in the deque
+        }
     }
 
     while (!tollBoothLine.empty()) // as long as the deque is not empty (.empty()) - meaning cars are still in line
