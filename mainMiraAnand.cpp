@@ -96,6 +96,30 @@ int main()
                     tollBoothLanes[i].back().print(); // access the information of the new car at the end of the line by using .back() & print its info using .print() from the Car class
                 }
             }
+            else // creation of a matching "else" statement to handle the case where the lane is not empty, which means 50/50 probability does not apply here (39% probability applies here)
+            {
+                probability = rand() % 100 + 1; // generate probability for this case
+                if (probability <= CAR_JOINS)
+                {
+                    tollBoothLanes[i].push_back(Car()); // using .push_back() to add a Car object (using the Car class) to the back of the deque (end of the line) for a specific lane
+                    cout << "Lane: " << i + 1 << " Joined: ";
+                    tollBoothLanes[i].back().print(); // access the information of the new car at the end of the line by using .back() & print its info using .print() from the Car class
+                }
+            }
+
+            // handle the case where a rear car will shift lanes to a random lanes that is not their own
+            probability = rand() % 100 + 1; // generate probability for this case
+            // use .empty() to ensure the lane is not empty before proceeding with the switching case
+            if (!tollBoothLanes[i].empty() && probability <= REAR_CAR_SWITCHES)
+            {
+                int randomLane; // creation of a variable to hold the random lane # that the car will switch into
+                // create a do-while loop so that a random lane # will be generated until it is a lane number that does not match the lane number the car is currently in
+                do
+                {
+                    randomLane = rand() % TOLL_BOOTH_LANE_NUM;
+
+                } while (randomLane == i);
+            }
 
             // after each time period, display the queue
             if (tollBoothLine.empty()) // use .empty() to check if the deque has any more cars in line
