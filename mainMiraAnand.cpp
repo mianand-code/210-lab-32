@@ -13,22 +13,30 @@
 using namespace std;
 
 // declaration and initialization of global const int variables
-const int INITIAL_LINE = 2; // represents the # of cars that are already in line to pay the toll when the simulation starts
-const int HEAD_CAR_PAYS_LEAVES = 55; // represents the probability that the car at the head of the line pays its toll and leaves the toll booth
-const int CAR_JOINS = 45; // represents the probability that another car will join the line for the toll booth
+const int TOLL_BOOTH_LANE_NUM = 4; // represents the # of toll booth lanes in the plaza
+const int INITIAL_LINE_MAX = 3; // represents the maximum # of cars that can join the initial line, will be used to generate a random # of cars between 1-3
+const int HEAD_CAR_PAYS_LEAVES = 46; // represents the probability that the car at the head of the line pays its toll and leaves the toll booth
+const int CAR_JOINS = 39; // represents the probability that another car will join the line for the toll booth
+const int REAR_CAR_SWITCHES = 15; // represents the probability that thev rear car will switch lanes
+const int TIME_PERIODS = 20; // represents the # of time periods the simulation will run for
 
 int main()
 {
     srand(time(0)); // needed as the first line in main() in order to generate a random # for probability
 
-    deque<Car> tollBoothLine; // create an std::deque that will hold Car objects
+    // create an array of type deque<Car>
+    // will be used to represent the multiple toll booth lanes (4) that each hold their own Car objects
+    deque<Car> tollBoothLanes[TOLL_BOOTH_LANE_NUM];
 
     int probability = rand() % 100 + 1; // generates a random # between 1-100 for probability
-    int timePeriod = 1; // to keep track of the current time period
 
-    // when the simulation starts, 2 cars should already be in line to pay the toll
-    for (int i = 0; i < INITIAL_LINE; i++)
+    // when the simulation starts, 1-3 cars should already be in line to pay the toll
+    for (int l = 0; l < TOLL_BOOTH_LANE_NUM; l++) // for each one of the lanes
+    {
+        int initialCars = rand() %
+        
         tollBoothLine.push_back(Car()); // using .push_back() to add a Car object (using the Car class) to the back of the deque
+    }
 
     cout << "Initial queue:" << endl; // output the initial/starting queue of cars
     for (auto car : tollBoothLine) // using a range-based for loop and the "auto" keyword to output the contents of the std::deque
