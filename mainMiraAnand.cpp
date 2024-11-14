@@ -64,16 +64,19 @@ int main()
 
         for (int i = 0; i < TOLL_BOOTH_LANE_NUM; i++) // creation of another for loop to handle each of the lanes
         {
-            // creating 2 if statements so that probability events can be handled independently from one another
-            // this means that during a time period, there is a possibility that both events will occur - a car leaving and a car joining, which is an accurate situation for a toll booth
-            // there is also a possibility that no events occur during a time period - no car leaves and no car joins
-            // this mimics a situation where a car may not leave because there is a delay when processing payment at the toll booth and a car simply may not join because there are no incoming cars
+            // creating 3 if statements so that probability events can be handled independently from one another
+            // this means that during a time period, there is a possibility that all events can occur - a head car leaving, a car joining, and a rear car switching lanes, which is an accurate situation for a toll booth
+            // if a car joins the end of the line and that same car switches lanes in the same time period, this can mimic a situation where the car realizes that it may be better off in a different line that is being processed faster
+            // there is also a possibility that no events occur during a time period - no car leaves, no car joins, and no car switches
+            // this mimics a situation where a car may not leave because there is a delay when processing payment at the toll booth and a car simply may not join because there are no incoming cars. Also, no car may want/need to switch
             
-            if (probability <= HEAD_CAR_PAYS_LEAVES) // handle the case where the car at the head of the line pays & leaves
+            // handle the case where the car at the head of the line pays & leaves
+            // use .empty() to ensure the lane is not empty before proceeding with head car removal
+            if (!tollBoothLanes[i].empty() && probability <= HEAD_CAR_PAYS_LEAVES)
             {
                 // I am displaying the car's information first before using .pop_back() so that I can access the car's information directly before removing it from the deque
-                // this is valid because the while loop above performs a check to ensure that we will not remove from an empty deque
-                cout << "Operation: Car paid: ";
+                // this is valid because the for statement above performs a check to ensure that we will not remove from an empty deque
+                cout << "Lane: " << 
                 tollBoothLine.front().print(); // access the information of the head car by using .front() & print its info using .print() from the Car class
                 tollBoothLine.pop_front(); // remove the head car from the deque by using .pop_front()
             }
