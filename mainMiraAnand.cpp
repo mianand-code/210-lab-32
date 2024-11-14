@@ -113,15 +113,23 @@ int main()
             if (!tollBoothLanes[i].empty() && probability <= REAR_CAR_SWITCHES)
             {
                 int randomLane; // creation of a variable to hold the random lane # that the car will switch into
-                // create a do-while loop so that a random lane # will be generated until it is a lane number that does not match the lane number the car is currently in
+                // create a do-while loop so that a random lane # will be generated until a lane number is generated that does not match the one the car is currently in
                 do
                 {
                     randomLane = rand() % TOLL_BOOTH_LANE_NUM;
 
                 } while (randomLane == i);
+
+                Car switchLaneCar = tollBoothLanes[i].back(); // create a new Car object (switchLaneCar) that will hold/save the data of the rear car in the current lane (this is the car that wants to switch)
+                tollBoothLanes[i].pop_back(); // remove the rear car in the current lane by using .pop_back()
+                // use .push_back() to move/add the rear car that was in the current lane (switchLaneCar) to the end of the randomly chosen lane
+                // [randomLane] accesses the random lane index that was chosen above
+                tollBoothLanes[randomLane].push_back(switchLaneCar);
+                cout << "Lane: " << i + 1 << " Switched: ";
+                switchLaneCar.print(); // display the information of the Car object that switched by using .print() from the Car class
             }
 
-            // after each time period, display the queue
+            // after each time period of operations, display the queue for each lane
             if (tollBoothLine.empty()) // use .empty() to check if the deque has any more cars in line
             {
                 // if there are no Car objects in the deque, the queue is empty
