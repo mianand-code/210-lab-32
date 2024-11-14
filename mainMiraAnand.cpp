@@ -131,18 +131,18 @@ int main()
         }
 
         // after each time period of operations, display the queue for each lane
-        for (int i = 0; i < TOLL_BOOTH_LANE_NUM; i++) // for each of the lanes
+        for (int i = 0; i < TOLL_BOOTH_LANE_NUM; i++) // for each one of the lanes
         {
-            if (tollBoothLanes[i].empty()) // use .empty() to check if the deque has any more cars in line
+            cout << "Lane " << i + 1 << " Queue:" << endl; // output the lane #
+            
+            if (tollBoothLanes[i].empty()) // use .empty() to check if the lane has any more cars in line
             {
-                // if there are no Car objects in the deque, the queue is empty
-                cout << "Queue:" << endl;
+                // if there are no cars in the lane's line, the queue is empty
                 cout << "    Empty" << endl;
             }
-            else // display the Car objects in the deque (line)
+            else // display the cars in the lane's line
             {
-                cout << ''
-                for (auto car : tollBoothLine) // using a range-based for loop and the "auto" keyword to output the contents of the std::deque
+                for (auto car : tollBoothLanes[i]) // use a range-based for loop and the "auto" keyword to output the Car objects in each of the 4 lanes
                 {
                     cout << "    ";
                     car.print(); // using the .print() nethod in the Car class to print each Car object stored in the deque
