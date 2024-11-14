@@ -17,7 +17,8 @@ const int TOLL_BOOTH_LANE_NUM = 4; // represents the # of toll booth lanes in th
 const int INITIAL_LINE_MAX = 3; // represents the maximum # of cars that can join the initial line, will be used to generate a random # of cars between 1-3
 const int HEAD_CAR_PAYS_LEAVES = 46; // represents the probability that the car at the head of the line pays its toll and leaves the toll booth
 const int CAR_JOINS = 39; // represents the probability that another car will join the line for the toll booth
-const int REAR_CAR_SWITCHES = 15; // represents the probability that thev rear car will switch lanes
+const int REAR_CAR_SWITCHES = 15; // represents the probability that the rear car will switch lanes
+const int CAR_JOINS_EMPTY_LANE = 50; // represents the probability that a new car will join the lane if it is completely empty and there is still more time in the simulation
 const int TIME_PERIODS = 20; // represents the # of time periods the simulation will run for
 
 int main()
@@ -76,17 +77,24 @@ int main()
             {
                 // I am displaying the car's information first before using .pop_back() so that I can access the car's information directly before removing it from the deque
                 // this is valid because the for statement above performs a check to ensure that we will not remove from an empty deque
-                cout << "Lane: " << 
-                tollBoothLine.front().print(); // access the information of the head car by using .front() & print its info using .print() from the Car class
-                tollBoothLine.pop_front(); // remove the head car from the deque by using .pop_front()
+                cout << "Lane: " << i + 1 << " Paid: ";
+                // [i] is used to access a specific lane within the array
+                tollBoothLanes[i].front().print(); // access the information of the head car by using .front() & print its info using .print() from the Car class
+                tollBoothLanes[i].pop_front(); // remove the head car from the deque by using .pop_front()
             }
 
-            probability = rand() % 100 + 1; // generate probability for the next case
-            if (probability <= CAR_JOINS) // handle the case where another car joins the line
+            // handle the case where another car joins the line
+            // will also handle the situation in which the line is empty, but there is still more time in the simulation
+            // there will be a 50/50 probability of a new car joining the line if the line is completely empty
+            if (tollBoothLanes[i].empty()) // check if the lane is empty
             {
-                tollBoothLine.push_back(Car()); // using .push_back() to add a Car object (using the Car class) to the back of the deque (end of the line)
-                cout << "Operation: Joined lane: ";
-                tollBoothLine.back().print(); // access the information of the new car at the end of the line by using .back() & print its info using .print() from the Car class
+                probability = rand() % 100 + 1; // generate probability for the case
+                if (probability <= CAR_JOINS_EMPTY_LANE) // handle the 50/50 probability case
+                {
+                    tollBoothLanes[i].push_back(Car()); // using .push_back() to add a Car object (using the Car class) to the back of the deque (end of the line) for a specific lane
+                    cout << "Lane: " << i + 1 << " Joined: ";
+                    tollBoothLanes[i].back().print(); // access the information of the new car at the end of the line by using .back() & print its info using .print() from the Car class
+                }
             }
 
             // after each time period, display the queue
