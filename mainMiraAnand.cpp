@@ -1,6 +1,9 @@
-// COMSC-210 | Lab 32 | Mira Anand
-// Module 12, Lesson: std::deque & std::stack, Assignment: Toll Booth
+// COMSC-210 | Lab 33 | Mira Anand
+// Module 12, Lesson: std::deque & std::stack, Assignment: Toll Plaza
 // IDE used: Visual Studio Code for Mac
+
+// To see coding progression for Lab #32, please see the "main" branch on GitHub
+// To see coding progression for Lab #33, please see the "lab33" branch on GitHub
 
 #include "Car.h" // references the Car header file, which contains a class to create Car objects - not altering the header file as per assignment instructions
 #include <cstdlib> // needed to generate a random #
