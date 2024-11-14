@@ -2,7 +2,7 @@
 // Module 12, Lesson: std::deque & std::stack, Assignment: Toll Booth
 // IDE used: Visual Studio Code for Mac
 
-#include "Car.h" // references the Car header file, which contains a class to create Car objects
+#include "Car.h" // references the Car header file, which contains a class to create Car objects - not altering the header file as per assignment instructions
 #include <cstdlib> // needed to generate a random #
 #include <ctime> // needed to generate a random #
 #include <deque> // needed to use std::deque
@@ -37,12 +37,17 @@ int main()
     while (!tollBoothLine.empty()) // as long as the deque is not empty (.empty()) - meaning cars are still in line
     {
         cout << endl;
-        cout << "Time: " << timePeriod << " "; // output the current time period
+        cout << "Time: " << timePeriod << endl; // output the current time period
 
+        // creating 2 if statements so that probability events can be handled independently from one another
+        // this means that during a time period, there is a possibility that both events will occur - a car leaving and a car joining, which is an accurate situation for a toll booth
+        // there is also a possibility that no events occur during a time period - no car leaves and no car joins
+        // this mimics a situation where a car may not leave because there is a delay when processing payment at the toll booth and a car simply may not join because there are no incoming cars
+        
         if (probability <= HEAD_CAR_PAYS_LEAVES) // handle the case where the car at the head of the line pays & leaves
         {
-            // I am displaying the information first before using pop_back() so that I can access the car's information directly before removing it from the deque
-            // the while loop performs a check to ensure that we will not remove from an empty deque
+            // I am displaying the car's information first before using .pop_back() so that I can access the car's information directly before removing it from the deque
+            // this is valid because the while loop above performs a check to ensure that we will not remove from an empty deque
             cout << "Operation: Car paid: ";
             tollBoothLine.front().print(); // access the information of the head car by using .front() & print its info using .print() from the Car class
             tollBoothLine.pop_front(); // remove the head car from the deque by using .pop_front()
@@ -57,7 +62,7 @@ int main()
         }
 
         // after each time period, display the queue
-        if (tollBoothLine.empty()) // use .empty to check if the deque has any more cars in line
+        if (tollBoothLine.empty()) // use .empty() to check if the deque has any more cars in line
         {
             // if there are no Car objects in the deque, the queue is empty
             cout << "Queue:" << endl;
