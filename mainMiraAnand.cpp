@@ -49,59 +49,60 @@ int main()
         cout << "Lane: " << i + 1 << ": " << endl; // output the lane #
         
         // use a range-based for loop and the "auto" keyword to output the Car objects in each of the 4 lanes
-        // loop through
-        for (auto car : tollBoothLine)
+        // loop through the array of type deque<Car>
+        for (auto car : tollBoothLanes[i]) // [i] accesses a specific lane (array index)
         {
             cout << "    ";
             car.print(); // using the .print() nethod in the Car class to print each Car object stored in the deque
         }
     }
 
-    while (!tollBoothLine.empty()) // as long as the deque is not empty (.empty()) - meaning cars are still in line
+    for (int timePeriod = 1; timePeriod <= TIME_PERIODS; timePeriod++) // simulation will run for 20 time periods & then terminate
     {
         cout << endl;
         cout << "Time: " << timePeriod << endl; // output the current time period
 
-        // creating 2 if statements so that probability events can be handled independently from one another
-        // this means that during a time period, there is a possibility that both events will occur - a car leaving and a car joining, which is an accurate situation for a toll booth
-        // there is also a possibility that no events occur during a time period - no car leaves and no car joins
-        // this mimics a situation where a car may not leave because there is a delay when processing payment at the toll booth and a car simply may not join because there are no incoming cars
-        
-        if (probability <= HEAD_CAR_PAYS_LEAVES) // handle the case where the car at the head of the line pays & leaves
+        for (int i = 0; i < TOLL_BOOTH_LANE_NUM; i++) // creation of another for loop to handle each of the lanes
         {
-            // I am displaying the car's information first before using .pop_back() so that I can access the car's information directly before removing it from the deque
-            // this is valid because the while loop above performs a check to ensure that we will not remove from an empty deque
-            cout << "Operation: Car paid: ";
-            tollBoothLine.front().print(); // access the information of the head car by using .front() & print its info using .print() from the Car class
-            tollBoothLine.pop_front(); // remove the head car from the deque by using .pop_front()
-        }
-
-        probability = rand() % 100 + 1; // generate probability for the next case
-        if (probability <= CAR_JOINS) // handle the case where another car joins the line
-        {
-            tollBoothLine.push_back(Car()); // using .push_back() to add a Car object (using the Car class) to the back of the deque (end of the line)
-            cout << "Operation: Joined lane: ";
-            tollBoothLine.back().print(); // access the information of the new car at the end of the line by using .back() & print its info using .print() from the Car class
-        }
-
-        // after each time period, display the queue
-        if (tollBoothLine.empty()) // use .empty() to check if the deque has any more cars in line
-        {
-            // if there are no Car objects in the deque, the queue is empty
-            cout << "Queue:" << endl;
-            cout << "    Empty" << endl;
-        }
-        else // display the Car objects in the deque (line)
-        {
-            cout << "Queue:" << endl;
-            for (auto car : tollBoothLine) // using a range-based for loop and the "auto" keyword to output the contents of the std::deque
+            // creating 2 if statements so that probability events can be handled independently from one another
+            // this means that during a time period, there is a possibility that both events will occur - a car leaving and a car joining, which is an accurate situation for a toll booth
+            // there is also a possibility that no events occur during a time period - no car leaves and no car joins
+            // this mimics a situation where a car may not leave because there is a delay when processing payment at the toll booth and a car simply may not join because there are no incoming cars
+            
+            if (probability <= HEAD_CAR_PAYS_LEAVES) // handle the case where the car at the head of the line pays & leaves
             {
-                cout << "    ";
-                car.print(); // using the .print() nethod in the Car class to print each Car object stored in the deque
+                // I am displaying the car's information first before using .pop_back() so that I can access the car's information directly before removing it from the deque
+                // this is valid because the while loop above performs a check to ensure that we will not remove from an empty deque
+                cout << "Operation: Car paid: ";
+                tollBoothLine.front().print(); // access the information of the head car by using .front() & print its info using .print() from the Car class
+                tollBoothLine.pop_front(); // remove the head car from the deque by using .pop_front()
+            }
+
+            probability = rand() % 100 + 1; // generate probability for the next case
+            if (probability <= CAR_JOINS) // handle the case where another car joins the line
+            {
+                tollBoothLine.push_back(Car()); // using .push_back() to add a Car object (using the Car class) to the back of the deque (end of the line)
+                cout << "Operation: Joined lane: ";
+                tollBoothLine.back().print(); // access the information of the new car at the end of the line by using .back() & print its info using .print() from the Car class
+            }
+
+            // after each time period, display the queue
+            if (tollBoothLine.empty()) // use .empty() to check if the deque has any more cars in line
+            {
+                // if there are no Car objects in the deque, the queue is empty
+                cout << "Queue:" << endl;
+                cout << "    Empty" << endl;
+            }
+            else // display the Car objects in the deque (line)
+            {
+                cout << "Queue:" << endl;
+                for (auto car : tollBoothLine) // using a range-based for loop and the "auto" keyword to output the contents of the std::deque
+                {
+                    cout << "    ";
+                    car.print(); // using the .print() nethod in the Car class to print each Car object stored in the deque
+                }
             }
         }
-
-        timePeriod++; // increment the time period counter for accurate output of time during the next loop
     }
     
     return 0;
